@@ -1,24 +1,34 @@
-package com.example.map;
+package com.example.map.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
+import com.example.map.R;
+import com.example.map.data.api.MapApi;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.mapview.MapView;
+import com.yandex.mapkit.places.panorama.PanoramaService;
+import com.yandex.mapkit.search.SearchManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private MapApi mapApi;
     private MapView mapview;
+    private SearchManager searchManager;
+    private PanoramaService.SearchSession searchSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        MapKitFactory.setApiKey("52ff5c15-57b0-4dd0-b00d-5a6c50a6429b");
-        MapKitFactory.initialize(this);
+        mapApi = new MapApi(this);
         getSupportActionBar().hide();
 
         setContentView(R.layout.activity_main);
@@ -31,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+
         super.onStop();
         mapview.onStop();
         MapKitFactory.getInstance().onStop();
@@ -38,10 +49,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+
         super.onStart();
         mapview.onStart();
         MapKitFactory.getInstance().onStart();
     }
 
+    public void profileButtonClick(View view) {
+
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void searchButtonClick(View view) {
+
+        //В процессе разбора поиска
+        Toast.makeText(this, "В разработке", Toast.LENGTH_SHORT).show();
+    }
 
 }
